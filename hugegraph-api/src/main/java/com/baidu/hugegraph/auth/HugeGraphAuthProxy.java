@@ -122,6 +122,8 @@ public final class HugeGraphAuthProxy implements HugeGraph {
     private final TaskSchedulerProxy taskScheduler;
     private final AuthManagerProxy authManager;
 
+    private final String GREMLIN_STOP_THREAD_NAME = "gremlin-server-stop";
+
     public HugeGraphAuthProxy(HugeGraph hugegraph) {
         LOG.info("Wrap graph '{}' with HugeGraphAuthProxy", hugegraph.name());
         HugeConfig config = (HugeConfig) hugegraph.configuration();
