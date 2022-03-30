@@ -122,5 +122,6 @@ public class HugeGraphServer {
             server.stop();
             LOG.info("HugeGraphServer stopped");
         }, "hugegraph-server-shutdown"));
+        HugeFactory.removeShutdownHook();
     }
 }
