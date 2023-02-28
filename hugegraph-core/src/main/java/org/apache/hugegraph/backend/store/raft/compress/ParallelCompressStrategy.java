@@ -1,4 +1,4 @@
-package org.apache.hugegraph.backend.store.raft.zip;
+package org.apache.hugegraph.backend.store.raft.compress;
 
 import com.alipay.sofa.jraft.util.ExecutorServiceHelper;
 import com.alipay.sofa.jraft.util.NamedThreadFactory;
@@ -24,23 +24,16 @@ import java.util.zip.CheckedOutputStream;
 import java.util.zip.Checksum;
 import java.util.zip.ZipEntry;
 
-/**
- * @author wuchaojing
- * @date 2023/2/23 4:12 下午
- * @wiki
- * @description
- **/
-public class ParallelZipStrategy implements ZipStrategy {
-    private static final Logger LOG = LoggerFactory.getLogger(ParallelZipStrategy.class);
+public class ParallelCompressStrategy implements CompressStrategy {
+    private static final Logger LOG = LoggerFactory.getLogger(ParallelCompressStrategy.class);
 
-    // work queue size
     public static final int QUEUE_SIZE = CoreOptions.CPUS;
     public static final long KEEP_ALIVE_SECOND = 300L;
 
     private final int compressThreads;
     private final int decompressThreads;
 
-    public ParallelZipStrategy(final int compressThreads, final int decompressThreads) {
+    public ParallelCompressStrategy(final int compressThreads, final int decompressThreads) {
         this.compressThreads = compressThreads;
         this.decompressThreads = decompressThreads;
     }
@@ -74,13 +67,11 @@ public class ParallelZipStrategy implements ZipStrategy {
         LOG.info("Start to compress snapshot in parallel mode");
         FileUtils.forceMkdir(zipFile.getParentFile());
 
-        // parallel compress
         final ExecutorService compressExecutor = newFixedPool(compressThreads, compressThreads,
             "raft-snapshot-compress-executor", new ThreadPoolExecutor.CallerRunsPolicy());
         final ZipArchiveScatterOutputStream scatterOutput = new ZipArchiveScatterOutputStream(compressExecutor);
         compressDirectoryToZipFile(rootFile, scatterOutput, sourceDir, ZipEntry.DEFLATED);
 
-        // write and flush
         try (final FileOutputStream fos = new FileOutputStream(zipFile);
              final BufferedOutputStream bos = new BufferedOutputStream(fos);
              final CheckedOutputStream cos = new CheckedOutputStream(bos, checksum);
@@ -104,7 +95,7 @@ public class ParallelZipStrategy implements ZipStrategy {
             computeZipFileChecksumValue(sourceZipFile, checksum);
             return true;
         });
-        // decompress zip file in thread pool
+
         try (final ZipFile zipFile = new ZipFile(sourceZipFile)) {
             final List<Future<Boolean>> futures = Lists.newArrayList();
             for (final Enumeration<ZipArchiveEntry> e = zipFile.getEntries(); e.hasMoreElements(); ) {

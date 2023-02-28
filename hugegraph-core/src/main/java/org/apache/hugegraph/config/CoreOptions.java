@@ -149,7 +149,7 @@ public class CoreOptions extends OptionHolder {
     public static final ConfigOption<Boolean> RAFT_SNAPSHOT_PARALLEL_COMPRESS =
         new ConfigOption<>(
             "raft.snapshot_parallel_compress",
-            "Whether to enable parallel compression.",
+            "Whether to enable parallel compress.",
             disallowEmpty(),
             false
         );

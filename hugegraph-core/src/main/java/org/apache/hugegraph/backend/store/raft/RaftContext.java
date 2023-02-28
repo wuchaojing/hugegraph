@@ -32,7 +32,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import org.apache.commons.io.FileUtils;
 import org.apache.hugegraph.backend.store.raft.rpc.ListPeersProcessor;
 import org.apache.hugegraph.backend.store.raft.rpc.RpcForwarder;
-import org.apache.hugegraph.backend.store.raft.zip.ZipStrategyManager;
+import org.apache.hugegraph.backend.store.raft.compress.CompressStrategyManager;
 import org.slf4j.Logger;
 
 import com.alipay.sofa.jraft.NodeManager;
@@ -141,7 +141,7 @@ public final class RaftContext {
         threads = config.get(CoreOptions.RAFT_BACKEND_THREADS);
         this.backendExecutor = this.createBackendExecutor(threads);
 
-        ZipStrategyManager.init(config);
+        CompressStrategyManager.init(config);
 
         this.raftRpcServer = null;
         this.endpoint = null;

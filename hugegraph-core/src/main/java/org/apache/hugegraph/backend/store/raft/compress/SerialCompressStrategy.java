@@ -1,4 +1,4 @@
-package org.apache.hugegraph.backend.store.raft.zip;
+package org.apache.hugegraph.backend.store.raft.compress;
 
 import org.apache.hugegraph.util.CompressUtil;
 import org.slf4j.Logger;
@@ -6,14 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.zip.Checksum;
 
-/**
- * @author wuchaojing
- * @date 2023/2/23 4:10 下午
- * @wiki
- * @description
- **/
-public class SerialZipStrategy implements ZipStrategy {
-    private static final Logger LOG = LoggerFactory.getLogger(SerialZipStrategy.class);
+public class SerialCompressStrategy implements CompressStrategy {
+    private static final Logger LOG = LoggerFactory.getLogger(SerialCompressStrategy.class);
 
     @Override
     public void compressZip(final String rootDir, final String sourceDir, final String outputZipFile,
