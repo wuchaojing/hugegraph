@@ -170,18 +170,18 @@ public class StoreSnapshotFile {
             Checksum checksum = new CRC64();
             try {
                 LOG.info("Prepare to compress dir '{}' to '{}'",
-                        snapshotDir, outputFile);
+                         snapshotDir, outputFile);
                 long begin = System.currentTimeMillis();
                 String rootDir = Paths.get(snapshotDir).getParent().toString();
                 String sourceDir = Paths.get(snapshotDir).getFileName().toString();
                 CompressStrategyManager.getDefault().compressZip(rootDir, sourceDir, outputFile, checksum);
                 long end = System.currentTimeMillis();
                 LOG.info("Compressed dir '{}' to '{}', took {} seconds",
-                        snapshotDir, outputFile, (end - begin) / 1000.0F);
+                         snapshotDir, outputFile, (end - begin) / 1000.0F);
             } catch (Throwable e) {
                 throw new RaftException(
-                        "Failed to compress snapshot, path=%s, files=%s",
-                        e, writerPath, snapshotDirMaps.keySet());
+                          "Failed to compress snapshot, path=%s, files=%s",
+                          e, writerPath, snapshotDirMaps.keySet());
             }
 
             LocalFileMeta.Builder metaBuilder = LocalFileMeta.newBuilder();
@@ -223,15 +223,15 @@ public class StoreSnapshotFile {
                                   .toString();
         try {
             LOG.info("Prepare to decompress snapshot zip '{}' to '{}'",
-                    archiveFile, parentPath);
+                     archiveFile, parentPath);
             long begin = System.currentTimeMillis();
             CompressStrategyManager.getDefault().decompressZip(archiveFile, parentPath, checksum);
             long end = System.currentTimeMillis();
             LOG.info("Decompress snapshot zip '{}' to '{}', took {} seconds",
-                    archiveFile, parentPath, (end - begin) / 1000.0F);
+                     archiveFile, parentPath, (end - begin) / 1000.0F);
         } catch (Throwable e) {
             throw new RaftException(
-                    "Failed to decompress snapshot, zip=%s", e, archiveFile);
+                      "Failed to decompress snapshot, zip=%s", e, archiveFile);
         }
 
         if (meta.hasChecksum()) {
