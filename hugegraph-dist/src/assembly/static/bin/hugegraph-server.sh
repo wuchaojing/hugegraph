@@ -1,5 +1,20 @@
 #!/bin/bash
-
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements. See the NOTICE file distributed with this
+# work for additional information regarding copyright ownership. The ASF
+# licenses this file to You under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
 abs_path() {
     SOURCE="${BASH_SOURCE[0]}"
     while [ -h "$SOURCE" ]; do
@@ -17,7 +32,7 @@ if [[ $# -lt 3 ]]; then
 fi
 
 BIN=$(abs_path)
-TOP="$(cd $BIN/../ && pwd)"
+TOP="$(cd "$BIN"/../ && pwd)"
 CONF="$TOP/conf"
 LIB="$TOP/lib"
 EXT="$TOP/ext"
@@ -26,7 +41,7 @@ LOGS="$TOP/logs"
 OUTPUT=${LOGS}/hugegraph-server.log
 
 export HUGEGRAPH_HOME="$TOP"
-. ${BIN}/util.sh
+. "${BIN}"/util.sh
 
 GREMLIN_SERVER_CONF="$1"
 REST_SERVER_CONF="$2"
@@ -43,13 +58,18 @@ elif [[ $# -eq 5 ]]; then
     GC_OPTION="$5"
 fi
 
-ensure_path_writable $LOGS
-ensure_path_writable $PLUGINS
+ensure_path_writable "$LOGS"
+ensure_path_writable "$PLUGINS"
 
-# The maximum and minium heap memory that service can use
+# The maximum and minimum heap memory that service can use
 MAX_MEM=$((32 * 1024))
 MIN_MEM=$((1 * 512))
-EXPECT_JDK_VERSION=1.8
+MIN_JAVA_VERSION=8
+
+# download binary file
+if [[ ! -e "${CONF}/hugegraph-server.keystore"  ]]; then
+  download "${CONF}" "https://github.com/apache/hugegraph-doc/raw/binary-1.0/dist/server/hugegraph-server.keystore"
+fi
 
 # Add the slf4j-log4j12 binding
 CP=$(find -L $LIB -name 'log4j-slf4j-impl*.jar' | sort | tr '\n' ':')
@@ -70,19 +90,18 @@ CP="$CP":$(find -L $PLUGINS -name '*.jar' | sort | tr '\n' ':')
 export CLASSPATH="${CLASSPATH:-}:$CP"
 
 # Change to $BIN's parent
-cd ${TOP}
+cd "${TOP}" || exit 1;
 
-# Find Java
+# Find java & enable server option
 if [ "$JAVA_HOME" = "" ]; then
     JAVA="java -server"
 else
     JAVA="$JAVA_HOME/bin/java -server"
 fi
 
-JAVA_VERSION=$($JAVA -version 2>&1 | awk 'NR==1{gsub(/"/,""); print $3}' \
-              | awk -F'_' '{print $1}')
-if [[ $? -ne 0 || $JAVA_VERSION < $EXPECT_JDK_VERSION ]]; then
-    echo "Please make sure that the JDK is installed and the version >= $EXPECT_JDK_VERSION" \
+JAVA_VERSION=$($JAVA -version 2>&1 | head -1 | cut -d'"' -f2 | sed 's/^1\.//' | cut -d'.' -f1)
+if [[ $? -ne 0 || $JAVA_VERSION -lt $MIN_JAVA_VERSION ]]; then
+    echo "Make sure the JDK is installed and the version >= $MIN_JAVA_VERSION, current is $JAVA_VERSION" \
          >> ${OUTPUT}
     exit 1
 fi
@@ -91,8 +110,7 @@ fi
 if [ "$JAVA_OPTIONS" = "" ]; then
     XMX=$(calc_xmx $MIN_MEM $MAX_MEM)
     if [ $? -ne 0 ]; then
-        echo "Failed to start HugeGraphServer, requires at least ${MIN_MEM}m free memory" \
-             >> ${OUTPUT}
+        echo "Failed to start HugeGraphServer, requires at least ${MIN_MEM}MB free memory" >> ${OUTPUT}
         exit 1
     fi
     JAVA_OPTIONS="-Xms${MIN_MEM}m -Xmx${XMX}m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${LOGS} ${USER_OPTION}"
@@ -100,6 +118,12 @@ if [ "$JAVA_OPTIONS" = "" ]; then
     # Rolling out detailed GC logs
     #JAVA_OPTIONS="${JAVA_OPTIONS} -XX:+UseGCLogFileRotation -XX:GCLogFileSize=10M -XX:NumberOfGCLogFiles=3 \
     #              -Xloggc:./logs/gc.log -XX:+PrintHeapAtGC -XX:+PrintGCDetails -XX:+PrintGCDateStamps"
+fi
+
+if [[ $JAVA_VERSION -gt 9 ]]; then
+    JAVA_OPTIONS="${JAVA_OPTIONS} --add-exports=java.base/jdk.internal.reflect=ALL-UNNAMED \
+                                  --add-modules=jdk.unsupported \
+                                  --add-exports=java.base/sun.nio.ch=ALL-UNNAMED "
 fi
 
 # Using G1GC as the default garbage collector (Recommended for large memory machines)
@@ -117,10 +141,10 @@ esac
 
 JVM_OPTIONS="-Dlog4j.configurationFile=${CONF}/log4j2.xml"
 if [[ ${OPEN_SECURITY_CHECK} == "true" ]]; then
-    JVM_OPTIONS="${JVM_OPTIONS} -Djava.security.manager=com.baidu.hugegraph.security.HugeSecurityManager"
+    JVM_OPTIONS="${JVM_OPTIONS} -Djava.security.manager=org.apache.hugegraph.security.HugeSecurityManager"
 fi
 
 # Turn on security check
 exec ${JAVA} -Dname="HugeGraphServer" ${JVM_OPTIONS} ${JAVA_OPTIONS} \
-     -cp ${CLASSPATH}: com.baidu.hugegraph.dist.HugeGraphServer ${GREMLIN_SERVER_CONF} ${REST_SERVER_CONF} \
+     -cp ${CLASSPATH}: org.apache.hugegraph.dist.HugeGraphServer ${GREMLIN_SERVER_CONF} ${REST_SERVER_CONF} \
      >> ${OUTPUT} 2>&1

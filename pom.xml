@@ -1,112 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements. See the NOTICE file distributed with this
+  work for additional information regarding copyright ownership. The ASF
+  licenses this file to You under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations
+  under the License.
+  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.baidu.hugegraph</groupId>
+    <groupId>org.apache.hugegraph</groupId>
     <artifactId>hugegraph</artifactId>
-    <version>0.12.0</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
-    <prerequisites>
-        <maven>3.3.9</maven>
-    </prerequisites>
+
     <name>hugegraph</name>
-    <url>https://github.com/hugegraph/hugegraph</url>
+    <url>https://github.com/apache/hugegraph</url>
     <description>
         hugegraph is a fast-speed, highly-scalable, transactional graph database developed by baidu
     </description>
 
     <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
+        <groupId>org.apache</groupId>
+        <artifactId>apache</artifactId>
+        <version>23</version>
     </parent>
 
     <inceptionYear>2017</inceptionYear>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
 
-    <scm>
-        <url>https://github.com/hugegraph/hugegraph</url>
-        <connection>https://github.com/hugegraph/hugegraph</connection>
-        <developerConnection>https://github.com/hugegraph/hugegraph</developerConnection>
-    </scm>
-
     <developers>
-        <developer>
-            <name>lizhangmei</name>
-            <email>javaloveme@gmail.com</email>
-        </developer>
-        <developer>
-            <name>zhoney</name>
-            <email>zhangyi89817@126.com</email>
-        </developer>
-        <developer>
-            <name>liningrui</name>
-            <email>liningrui@vip.qq.com</email>
-        </developer>
-        <developer>
-            <name>wangjiankui</name>
-            <email>wangjiankui1989@163.com</email>
-        </developer>
-        <developer>
-            <name>lizhigang</name>
-            <email>albert_liang@126.com</email>
-        </developer>
-        <developer>
-            <name>huanghaiping</name>
-            <email>954872405@qq.com</email>
-        </developer>
-        <developer>
-            <name>jishilei</name>
-            <email>littlestonelover@gmail.com</email>
-        </developer>
-        <developer>
-            <name>zhanghuimin</name>
-            <email>283157054@qq.com</email>
-        </developer>
-        <developer>
-            <name>liunanke</name>
-            <email>lnkustc@126.com</email>
-        </developer>
-        <developer>
-            <name>liujie</name>
-            <email>liujie23@unknown</email>
-        </developer>
-        <developer>
-            <name>houzhizhen</name>
-            <email>houzhizhen_101@163.com</email>
-        </developer>
-        <developer>
-            <name>zhangsuochao</name>
-            <email>mysuochao@163.com</email>
-        </developer>
+      <developer>
+        <id>Apache Hugegraph(incubating)</id>
+        <email>dev-subscribe@hugegraph.apache.org</email>
+        <url>https://hugegraph.apache.org/</url>
+      </developer>
     </developers>
 
+    <mailingLists>
+      <mailingList>
+        <name>Development Mailing List</name>
+        <subscribe>dev-subscribe@hugegraph.apache.org</subscribe>
+        <unsubscribe>dev-unsubscribe@hugegraph.apache.org</unsubscribe>
+        <post>dev@hugegraph.incubator.apache.org</post>
+      </mailingList>
+      <mailingList>
+        <name>Commits List</name>
+        <subscribe>commits-subscribe@hugegraph.apache.org</subscribe>
+        <unsubscribe>commits-unsubscribe@hugegraph.apache.org</unsubscribe>
+        <post>commits@hugegraph.apache.org</post>
+      </mailingList>
+      <mailingList>
+        <name>Issues List</name>
+        <subscribe>issues-subscribe@hugegraph.apache.org</subscribe>
+        <unsubscribe>issues-unsubscribe@hugegraph.apache.org</unsubscribe>
+        <post>issues@hugegraph.apache.org</post>
+      </mailingList>
+    </mailingLists>
+
+    <issueManagement>
+      <system>Github Issues</system>
+      <url>https://github.com/apache/hugegraph/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/apache/hugegraph</url>
+        <connection>scm:git:https://github.com/apache/hugegraph.git</connection>
+        <developerConnection>scm:git:https://github.com/apache/hugegraph.git</developerConnection>
+    </scm>
+
+    <prerequisites>
+        <maven>3.5.0</maven>
+    </prerequisites>
+
     <properties>
+        <revision>1.0.0</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <top.level.dir>${project.basedir}/..</top.level.dir>
         <release.name>hugegraph</release.name>
-        <final.name>${release.name}-${project.version}</final.name>
+        <final.name>apache-${release.name}-incubating-${project.version}</final.name>
+        <final.destfile>${top.level.dir}/${final.name}.tar.gz</final.destfile>
         <compiler.source>1.8</compiler.source>
         <compiler.target>1.8</compiler.target>
         <slf4j.version>1.7.5</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <log4j2.version>2.17.1</log4j2.version>
         <junit.version>4.12</junit.version>
-        <tinkerpop.version>3.4.3</tinkerpop.version>
+        <tinkerpop.version>3.5.1</tinkerpop.version>
         <commons.io.version>2.7</commons.io.version>
         <guava.version>25.1-jre</guava.version>
         <httpclient.version>4.5.13</httpclient.version>
-        <jersey.version>2.25.1</jersey.version>
-        <metrics.version>3.1.0</metrics.version>
+        <jersey.version>3.0.3</jersey.version>
+        <metrics.version>4.2.4</metrics.version>
         <javassist.version>3.21.0-GA</javassist.version>
         <shell-executable>bash</shell-executable>
+        <checkstyle.plugin.version>3.1.2</checkstyle.plugin.version>
+        <checkstyle.version>8.45</checkstyle.version>
+        <hugegraph-commons.version>1.0.0</hugegraph-commons.version>
+        <grpc.version>1.47.0</grpc.version>
+        <protobuf.version>3.21.7</protobuf.version>
     </properties>
+
     <modules>
         <module>hugegraph-core</module>
         <module>hugegraph-api</module>
@@ -124,6 +133,18 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- TODO: could we merge them to hugegraph-commons only? -->
+            <dependency>
+                <groupId>org.apache.hugegraph</groupId>
+                <artifactId>hugegraph-rpc</artifactId>
+                <version>${hugegraph-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.hugegraph</groupId>
+                <artifactId>hugegraph-common</artifactId>
+                <version>${hugegraph-commons.version}</version>
+            </dependency>
+
             <!-- logging -->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
@@ -260,7 +281,7 @@
             </dependency>
             <dependency>
                 <groupId>io.dropwizard.metrics</groupId>
-                <artifactId>metrics-jersey2</artifactId>
+                <artifactId>metrics-jersey3</artifactId>
                 <version>${metrics.version}</version>
             </dependency>
 
@@ -270,12 +291,45 @@
                 <artifactId>javassist</artifactId>
                 <version>${javassist.version}</version>
             </dependency>
+
+            <!-- protobuf -->
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-netty</artifactId>
+                <version>${grpc.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-protobuf</artifactId>
+                <version>${grpc.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-stub</artifactId>
+                <version>${grpc.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>${protobuf.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-text</artifactId>
+                <version>1.10.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
     <build>
         <pluginManagement>
             <plugins>
+                <!-- TODO: move necessary plugin out of pluginManagement? -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>license-maven-plugin</artifactId>
@@ -322,16 +376,16 @@
                     </configuration>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.0.0</version>
                     <configuration>
                         <filesets>
                             <fileset>
-                                <directory>${top.level.dir}</directory>
+                                <directory>${project.basedir}/</directory>
                                 <includes>
                                     <include>*.tar</include>
                                     <include>*.tar.gz</include>
-                                    <include>*.zip</include>
+                                    <include>.flattened-pom.xml</include>
                                     <include>${final.name}/**</include>
                                 </includes>
                                 <followSymlinks>false</followSymlinks>
@@ -342,8 +396,112 @@
                         </filesets>
                     </configuration>
                 </plugin>
+                <!-- Apache RAT for license check -->
+                <plugin>
+                    <groupId>org.apache.rat</groupId>
+                    <artifactId>apache-rat-plugin</artifactId>
+                    <configuration>
+                        <excludes>
+                            <exclude>**/*.versionsBackup</exclude>
+                            <exclude>**/*.proto</exclude>
+                            <exclude>**/*.log</exclude>
+                            <exclude>**/*.txt</exclude>
+                            <exclude>**/*.json</exclude>
+                            <exclude>**/*.conf</exclude>
+                            <exclude>**/*.map</exclude>
+                            <exclude>**/*.properties</exclude>
+                            <exclude>dist/**/*</exclude>
+                            <exclude>**/assembly/static/bin/hugegraph.service</exclude>
+                            <exclude>**/swagger-ui/**/*</exclude>
+                            <exclude>scripts/dev/reviewers</exclude>
+                            <exclude>scripts/dev/reviewers</exclude>
+                            <exclude>**/*.md</exclude>
+                            <exclude>**/dependency-reduced-pom.xml</exclude>
+                            <exclude>**/logs/*.log</exclude>
+                            <exclude>**/META-INF/**/*</exclude>
+                            <exclude>**/target/*</exclude>
+                            <exclude>style/*</exclude>
+                            <exclude>ChangeLog</exclude>
+                            <exclude>CONFIG.ini</exclude>
+                            <exclude>GROUPS</exclude>
+                            <exclude>OWNERS</exclude>
+                            <!-- Git & GitHub  -->
+                            <exclude>.github/**/*</exclude>
+                            <exclude>.gitignore</exclude>
+                            <exclude>.gitattributes</exclude>
+                            <!-- Intellij -->
+                            <exclude>**/*.iml</exclude>
+                            <exclude>**/*.iws</exclude>
+                            <exclude>**/*.ipr</exclude>
+                            <exclude>**/META-INF/MANIFEST.MF</exclude>
+                            <!-- Maven -->
+                            <exclude>.repository/**</exclude>
+                            <exclude>**/.flattened-pom.xml</exclude>
+                        </excludes>
+                        <consoleOutput>true</consoleOutput>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${checkstyle.plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>${checkstyle.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <configLocation>style/checkstyle.xml</configLocation>
+                    <encoding>UTF-8</encoding>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                    <linkXRef>false</linkXRef>
+                    <includeTestSourceDirectory>false</includeTestSourceDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.2.7</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
     </build>
 
     <profiles>
@@ -357,7 +515,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.20</version>
                         <executions>
                             <execution>
                                 <id>core-test</id>
@@ -378,7 +535,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.20</version>
                         <executions>
                             <execution>
                                 <id>unit-test</id>
@@ -399,7 +555,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.20</version>
                         <executions>
                             <execution>
                                 <id>api-test</id>
@@ -420,7 +575,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.20</version>
                         <executions>
                             <execution>
                                 <id>tinkerpop-structure-test</id>
@@ -441,7 +595,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.20</version>
                         <executions>
                             <execution>
                                 <id>tinkerpop-process-test</id>
@@ -456,13 +609,12 @@
             </build>
         </profile>
         <profile>
-            <id>release</id>
+            <id>apache-release</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>2.2.1</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -475,25 +627,26 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.9.1</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
+                                <configuration>
+                                    <doclint>none</doclint>
+                                    <failOnError>false</failOnError>
+                                </configuration>
                             </execution>
                         </executions>
                         <configuration>
-                            <additionalJOptions>
-                                <additionalJOption>-Xdoclint:none</additionalJOption>
-                            </additionalJOptions>
+                            <doclint>none</doclint>
+                            <failOnError>false</failOnError>
                         </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.5</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -511,19 +664,23 @@
                             </gpgArguments>
                         </configuration>
                     </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.3</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
-                        </configuration>
-                    </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>staged-releases</id>
+            <name>staged-releases</name>
+            <url>https://repository.apache.org/content/groups/staging/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>

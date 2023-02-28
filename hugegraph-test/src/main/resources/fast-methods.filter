@@ -1,4 +1,20 @@
 # Proper format is "TestClass.testMethodName: ignore reason"
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 
 ####################    structure suite    ####################
 
@@ -79,6 +95,9 @@ org.apache.tinkerpop.gremlin.structure.util.reference.ReferenceEdgeTest.shouldCo
 # unsupported automatic edge id, therefore number of edge is wrong
 org.apache.tinkerpop.gremlin.process.traversal.strategy.decoration.EventStrategyProcessTest.shouldTriggerAddEdge: Unsupported automatic edge id, therefore number of edge is wrong
 org.apache.tinkerpop.gremlin.process.traversal.strategy.decoration.EventStrategyProcessTest.shouldTriggerAddEdgeByPath: Unsupported automatic edge id, therefore number of edge is wrong
+# shouldWriteToMultiplePartitions
+org.apache.tinkerpop.gremlin.process.traversal.strategy.decoration.PartitionStrategyProcessTest.shouldWriteToMultiplePartitions: It's not allowed to query by index when there are uncommitted records
+org.apache.tinkerpop.gremlin.process.traversal.strategy.decoration.PartitionStrategyProcessTest.shouldWriteVerticesToMultiplePartitions: It's not allowed to query by index when there are uncommitted records
 
 # assert error, long time, reason: replicated edges treated as one
 org.apache.tinkerpop.gremlin.process.traversal.step.map.CountTest.Traversals.g_V_both_both_count: Replicated edges treated as one
@@ -149,6 +168,7 @@ org.apache.tinkerpop.gremlin.process.traversal.step.filter.HasTest.Traversals.g_
 org.apache.tinkerpop.gremlin.process.traversal.step.filter.HasTest.Traversals.g_V_hasXname_not_endingWithXasXX: Unsupported predicate 'notEndingWith(as)'
 org.apache.tinkerpop.gremlin.process.traversal.step.filter.HasTest.Traversals.g_V_hasXage_withoutX27_29X_count: Unsupported relation 'NEQ'
 org.apache.tinkerpop.gremlin.process.traversal.step.filter.HasTest.Traversals.g_V_hasXname_gtXmX_andXcontainingXoXXX: Unsupported predicate 'containing(o)'
+org.apache.tinkerpop.gremlin.process.traversal.step.filter.HasTest.Traversals.g_V_hasXp_neqXvXX: Don't accept query based on properties [p] that are not indexed in any label, may not match not-equal condition
 
 # Unsupport edge label 'created': 'software' -> 'person', has existed an edgelabel (created: person -> software) in this case
 org.apache.tinkerpop.gremlin.process.traversal.step.map.AddEdgeTest.Traversals.g_V_hasXname_markoX_asXaX_outEXcreatedX_asXbX_inV_addEXselectXbX_labelX_toXaX: Unsupport edge from inV to outV

@@ -1,6 +1,4 @@
 /*
- * Copyright 2017 HugeGraph Authors
- *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements. See the NOTICE file distributed with this
  * work for additional information regarding copyright ownership. The ASF
@@ -28,8 +26,7 @@ import com.datastax.driver.core.querybuilder.Clause.ContainsKeyClause;
 public class Clauses {
 
     public static boolean needAllowFiltering(Clause clause) {
-        return ContainsKeyClause.class.isInstance(clause) ||
-               ContainsClause.class.isInstance(clause);
+        return clause instanceof ContainsKeyClause || clause instanceof ContainsClause;
     }
 
     public static Clause and(Clause left, Clause right) {
@@ -42,9 +39,9 @@ public class Clauses {
 
     static class BinClause extends Clause {
 
-        private Clause left;
-        private String op;
-        private Clause right;
+        private final Clause left;
+        private final String op;
+        private final Clause right;
 
         public BinClause(Clause left, String op, Clause right) {
             this.left = left;
@@ -64,11 +61,7 @@ public class Clauses {
 
         @Override
         boolean containsBindMarker() {
-            if (Utils.containsBindMarker(this.left) ||
-                Utils.containsBindMarker(this.right)) {
-                return true;
-            }
-            return false;
+            return Utils.containsBindMarker(this.left) || Utils.containsBindMarker(this.right);
         }
 
         @Override
@@ -89,7 +82,7 @@ public class Clauses {
     static class AndClause extends BinClause {
 
         public AndClause(Clause left, Clause right) {
-            super(left, "AND",  right);
+            super(left, "AND", right);
         }
     }
 }
